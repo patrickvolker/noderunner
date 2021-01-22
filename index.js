@@ -69,7 +69,7 @@ app.post('/stats', (req, res) => {
     });
 });
 
-app.listen(5001, () => console.log('Online!'));
+app.listen((process.env.dbPort || 5001), () => console.log('Online!'));
 
 
 //sql line for inserting new run ---> INSERT INTO `stats` (`id`, `run_date`, `run_length`, `run_total`) VALUES (NULL, '2021-01-08', '6', '48');
