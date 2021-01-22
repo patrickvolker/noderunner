@@ -8,6 +8,7 @@ const dbUser = process.env.dbUser;
 const dbPassword = process.env.dbPassword;
 const dbJaws = process.env.dbJaws;
 const dbPort = process.env.dbPort;
+const PORT = process.env.PORT;
 
 app.use(cors());
 //jawsdb
@@ -69,7 +70,7 @@ app.post('/stats', (req, res) => {
     });
 });
 
-app.listen((process.env.dbPort || 5001), () => console.log('Online!'));
+app.listen((process.env.PORT || process.env.dbPort), () => console.log('Online!'));
 
 
 //sql line for inserting new run ---> INSERT INTO `stats` (`id`, `run_date`, `run_length`, `run_total`) VALUES (NULL, '2021-01-08', '6', '48');
