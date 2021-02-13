@@ -22,6 +22,11 @@ app.use(
 );
 app.use(express.json());
 
+var corsOptions = {
+  origin: 'http://patrickvolker.com',
+  optionsSuccessStatus: 200,
+};
+
 db.connect((err) => {
   if (err) {
     throw err;
