@@ -10,38 +10,45 @@ const dbJaws = process.env.dbJaws;
 const dbPort = process.env.dbPort;
 const PORT = process.env.PORT;
 
-app.use(cors());
 if (process.env.JAWSDB_URL) {
   var db = mysql.createConnection(process.env.JAWSDB_URL);
 }
+//or local connection
+// var db = mysql.createConnection({
+//     host: dbHost,
+//     user: dbUser,
+//     password: dbPassword,
+//     database: dbJaws,
+//     port: (dbPort || 5000)
+// });
 
 app.use(
   express.urlencoded({
     extended: true,
-  })
+  }),
 );
 app.use(express.json());
 
-var corsOptions = {
-  origin: 'http://patrickvolker.com',
-  optionsSuccessStatus: 200,
-};
+app.options('*', function (req, res) {
+  res.sendStatus(200);
+});
 
-app.use(cors(corsOptions));
+app.use(cors);
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin: *');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
 
 db.connect((err) => {
   if (err) {
     throw err;
   }
   console.log('MySQL connected!');
-});
-
-app.get('/stats', (req, res) => {
-  const sql = 'SELECT * FROM `stats`';
-  db.query(sql, (err, result) => {
-    if (err) throw 'Something bad happened...sorry...';
-    res.send(result);
-  });
 });
 
 app.get('/stats/run_total', (req, res) => {
@@ -70,5 +77,5 @@ app.post('/stats', (req, res) => {
 });
 
 app.listen(process.env.PORT || process.env.dbPort, () =>
-  console.log('Online!')
+  console.log('Online!'),
 );
