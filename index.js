@@ -41,6 +41,7 @@ app.use(function (req, res, next) {
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept',
   );
+  res.header('Access-Control-Allow-Methods', 'GET, POST');
   next();
 });
 
@@ -49,6 +50,14 @@ db.connect((err) => {
     throw err;
   }
   console.log('MySQL connected!');
+});
+
+app.get('/stats', (req, res) => {
+  const sql = 'SELECT * FROM `stats`';
+  db.query(sql, (err, result) => {
+    if (err) throw 'Something bad happened...sorry...';
+    res.send(result);
+  });
 });
 
 app.get('/stats/run_total', (req, res) => {
