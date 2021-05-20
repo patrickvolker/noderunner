@@ -29,9 +29,9 @@ app.use(
 );
 app.use(express.json());
 
-app.options('*', function (req, res) {
-  res.sendStatus(200);
-});
+// app.options('*', function (req, res) {
+//   res.sendStatus(200);
+// });
 
 app.use(cors());
 
